@@ -51,29 +51,85 @@ What's the time complexity?
  */
 
 function Queue(capacity) {
-  // implement me...
+	this.capacity = capacity;
+	this.queue = {};
+	this.insertPoint = 0;
+	this.pullPoint = 0;
+
+	for (;capacity--;) {
+		this.queue[''+capacity] = ' ';
+	}
+
+	this.printQueue = function() {
+		var output = '[ ';
+		for (var i=0 ; i<this.capacity ; i++) {
+			output += this.queue[i]+' ';
+		}
+		output += ']';
+		return output;
+	}
+
+	this.shiftPosition = function(){
+		for(var i=0 ; i<=this.insertPoint ; i++) {
+			this.queue[i] = this.queue[i+1];
+		}
+	}
 }
 
 Queue.prototype.enqueue = function(value) {
-  // implement me...
+	console.log('queue length:', this.insertPoint);
+	if (this.insertPoint === 9) { return; }
+	this.queue[this.insertPoint++] = value;
+	console.log( this.printQueue() );
 };
 // Time complexity:
 
 Queue.prototype.dequeue = function() {
-  // implement me...
+	console.log('DE QEUE:', this.insertPoint);
+	if (this.insertPoint === 0) { return; }
+	this.shiftPosition();
+	this.insertPoint--;
+	console.log( this.printQueue() );
 };
 // Time complexity:
 
 Queue.prototype.peek = function() {
-  // implement me...
+	return this.queue[this.insertPoint];
 };
 
 Queue.prototype.count = function() {
-  // implement me...
+	return this.insertPoint;
 };
 // Time complexity:
 
-
+var queue = new Queue(10);
+queue.printQueue();
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.enqueue(4);
+queue.enqueue(5);
+queue.enqueue(6);
+queue.enqueue(7);
+queue.enqueue(8);
+queue.dequeue();
+queue.dequeue();
+queue.enqueue(8);
+queue.dequeue();
+queue.enqueue(9);
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+queue.enqueue(1);
+queue.enqueue(2);
+queue.dequeue();
 
 /*
 *** Exercises:

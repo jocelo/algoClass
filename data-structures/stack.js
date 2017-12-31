@@ -51,29 +51,112 @@ What's the time complexity?
  */
 
 function Stack(capacity) {
-  // implement me...
+    this.capacity = capacity;
+    this.stack = {};
+    this.pointer = 0;
+    this.key = '';
+    
+    for (;capacity--;) {
+        this.stack['cell'+capacity] = null;
+    }
+
+    this._getStructure = function() {
+        var output = '[ ',
+            key = '';
+        for(var i=0; i<this.capacity ; i++) {
+            key = 'cell'+i;
+            output += (this.stack[key]||' ')+' ';
+        }
+        output += ']';
+        return output;
+    }
 }
 
 Stack.prototype.push = function(value) {
-  // implement me...
+    console.log('[+] Push Operation: ', value);
+    if (this.pointer === this.capacity) {
+        console.log('   [x] The stack is full!');
+        return;
+    }
+    this.key = 'cell'+this.pointer;
+    this.stack[this.key] = value;
+    this.pointer++;
+    console.log(this._getStructure()+' Added.');
 };
 // Time complexity:
 
 Stack.prototype.pop = function() {
-  // implement me...
+    console.log('[-] Pop Operation: ');
+    if (this.pointer == 0) {
+        console.log('   [x] The stack is empty!');
+        return;
+    }
+    this.pointer--;
+    this.key = 'cell'+this.pointer;
+    var tmp = this.stack[this.key];
+    this.stack[this.key] = null;
+    console.log(this._getStructure(),tmp,'popped.');
 };
 // Time complexity:
 
 Stack.prototype.peek = function() {
-  // implement me...
+    console.log('[Peek]: Last element on the list is:',this.stack[this.key]);
 };
 // Time complexity:
 
 Stack.prototype.count = function() {
-  // implement me...
+    console.log('[Count]: The stack size is', this.pointer);
 };
 // Time complexity:
 
+Stack.prototype.min = function() {
+    console.log('[<] Min operation');
+    if (this.pointer === 0) {
+        return;
+    }
+    var minValue = this.stack['cell'+ (this.pointer-1)],
+        key = '';
+    for (var i=this.pointer ; i-- ; ) {
+        key = 'cell'+i;
+        minValue = minValue > this.stack[key] ? this.stack[key] : minValue ;
+    }
+    console.log(this._getStructure()+' The minimum value of the stack is',minValue);
+}
+
+staka = new Stack(20);
+staka.push(1);
+staka.push(2);
+staka.pop();
+staka.push(3);
+staka.pop();
+staka.push(4);
+staka.push(5);
+staka.pop();
+staka.pop();
+staka.pop();
+staka.pop();
+staka.push(6);
+staka.push(7);
+staka.push(8);
+staka.push(3);
+staka.push(9);
+staka.push(4);
+staka.push(3);
+staka.count();
+staka.min();
+staka.push(2);
+staka.push(1);
+staka.push(7);
+staka.push(8);
+staka.push(9);
+staka.push(5);
+staka.count();
+staka.min();
+staka.pop();
+staka.pop();
+staka.pop();
+staka.count();
+staka.min();
 
 /*
 *** Exercises:
